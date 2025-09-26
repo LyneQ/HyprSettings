@@ -1,0 +1,198 @@
+/* Base app styles and element defaults for HyprSettings */
+
+/* 1) Root variables */
+:root {
+  --bg: #0b0b0b;
+  --panel: #121212;
+  --panel-2: #171717;
+  --text: #e8e8e8;
+  --muted: #a9b1bb;
+  --border: #2a2a2a;
+  --accent: #4f91ff;
+  --accent-2: #3a7be0;
+  --danger: #e05d5d;
+  --success: #3fb950;
+  --focus: #7aa2f7;
+  --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 6px 18px rgba(0,0,0,0.25);
+  --radius: 10px;
+  --radius-sm: 8px;
+  --radius-xs: 6px;
+}
+
+/* 2) Base reset-ish */
+*, *::before, *::after { box-sizing: border-box; }
+html, body, #root { height: 100%; }
+html { background: var(--bg); color-scheme: dark; }
+body {
+  margin: 0;
+  color: var(--text);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* 3) Typography */
+body, input, button, textarea, select {
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell,
+    Noto Sans, Helvetica Neue, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+h1, h2, h3, h4, h5, h6 { margin: 0.5rem 0 0.25rem; font-weight: 600; }
+p { margin: 0.25rem 0 0.75rem; }
+small { color: var(--muted); }
+
+/* 4) Links */
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* 5) Panels and cards */
+.card {
+  background: linear-gradient(180deg, var(--panel), var(--panel-2));
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 12px;
+}
+
+/* 6) Forms */
+label { display: inline-block; margin-bottom: 6px; color: var(--muted); }
+
+input[type="text"],
+input[type="password"],
+input[type="search"],
+input[type="email"],
+input[type="number"],
+input[type="url"],
+input[type="date"],
+input[type="time"],
+select,
+textarea {
+  width: 100%;
+  background: #0f1115;
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 8px 10px;
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+
+input::placeholder, textarea::placeholder { color: #828a94; }
+
+input:focus, select:focus, textarea:focus {
+  border-color: var(--focus);
+  box-shadow: 0 0 0 3px rgba(122, 162, 247, 0.2);
+}
+
+/* Number input tweaks */
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+input[type=number] { -moz-appearance: textfield; }
+
+/* 7) Buttons */
+button,
+input[type="button"],
+input[type="submit"],
+input[type="reset"] {
+  appearance: none;
+  background: linear-gradient(180deg, var(--accent), var(--accent-2));
+  color: white;
+  border: 1px solid #2a60c9;
+  border-radius: var(--radius-xs);
+  padding: 8px 12px;
+  cursor: pointer;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  transition: transform 0.06s ease, filter 0.15s ease, box-shadow 0.15s ease;
+  box-shadow: 0 1px 0 rgba(255,255,255,0.05) inset, 0 1px 10px rgba(0,0,0,0.35);
+}
+
+button:hover,
+input[type="button"]:hover,
+input[type="submit"]:hover,
+input[type="reset"]:hover { filter: brightness(1.05); }
+
+button:active,
+input[type="button"]:active,
+input[type="submit"]:active,
+input[type="reset"]:active { transform: translateY(1px); }
+
+button:disabled,
+input[type="button"]:disabled,
+input[type="submit"]:disabled,
+input[type="reset"]:disabled {
+  filter: grayscale(0.4) brightness(0.9);
+  cursor: not-allowed;
+}
+
+/* Button variants */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.btn--secondary { background: #2a2f3a; border-color: #2f3542; }
+.btn--danger { background: linear-gradient(180deg, #ff6b6b, #e05555); border-color: #b83a3a; }
+.btn--ghost {
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+.btn--ghost:hover { background: #111319; }
+
+/* 8) HR */
+hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 12px 0;
+}
+
+/* 9) Lists */
+ul, ol { padding-left: 1.25rem; margin: 0.25rem 0 0.5rem; }
+li { margin: 4px 0; }
+
+/* 10) Code and pre */
+code, kbd, pre, samp {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+pre {
+  background: #0e0f13;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 8px;
+  overflow: auto;
+}
+code { background: #0e0f13; border: 1px solid var(--border); border-radius: 6px; padding: 2px 6px; }
+
+/* 11) Tables */
+table { width: 100%; border-collapse: collapse; }
+th, td { border: 1px solid var(--border); padding: 6px 8px; }
+th { background: #11131a; text-align: left; }
+
+/* 12) Scrollbar (WebKit) */
+*::-webkit-scrollbar { width: 10px; height: 10px; }
+*::-webkit-scrollbar-thumb { background: #2a2f3a; border-radius: 8px; }
+*::-webkit-scrollbar-thumb:hover { background: #3a4150; }
+*::-webkit-scrollbar-track { background: transparent; }
+
+/* 13) Layout helpers */
+.container { width: min(1100px, 100% - 24px); margin: 0 auto; }
+.stack { display: flex; flex-direction: column; gap: 12px; }
+.row { display: flex; align-items: center; gap: 8px; }
+.grid-2 { display: grid; grid-template-columns: 1fr 2fr; gap: 12px; align-items: start; }
+.panel { background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius); padding: 8px; }
+
+/* 14) Utilities */
+.mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+.muted { color: var(--muted); }
+.center { display: grid; place-items: center; }
+.round { border-radius: 999px; }
+.hide { display: none !important; }
+
+/* 15) Inputs grouped */
+.input-row { display: grid; grid-template-columns: 160px 1fr; gap: 10px; align-items: center; }
+
+/* Ensure Wails dark bg integrates nicely */
+#root { background: var(--bg); }
