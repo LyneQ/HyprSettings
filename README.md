@@ -41,3 +41,47 @@ Contributing
 Credits
 - Author LyneQ <Hey@lyneq.tech>
 - Built with Wails v2, React, TypeScript, and Vite
+
+
+Routing
+- A highly customizable React Router has been integrated (react-router-dom v6). The app uses a router wrapper that supports modes (hash/browser/memory), route guards, per-route layouts, lazy loading, not-found pages, and navigation hooks (beforeEach/afterEach).
+
+Basics
+- Entry: frontend/src/App.tsx configures routes and RouterRoot.
+- Modes: default is hash (good for Wails). You can override via env variables in Vite:
+  - VITE_ROUTER_MODE=hash|browser|memory
+  - VITE_ROUTER_BASENAME=/your/base
+
+Add a new route (example)
+- Edit frontend/src/App.tsx and append to the routes array:
+
+  {
+    path: '/about',
+    element: <About />,
+    layout: AppLayout,
+    meta: { title: 'About' },
+    guards: [async ({ to }) => {
+      // Return false to deny navigation
+      return true
+    }]
+  }
+
+- For large pages, prefer lazy loading:
+
+  {
+    path: '/heavy',
+    lazy: () => import('./pages/HeavyPage'),
+    layout: AppLayout,
+  }
+
+Hooks
+- Use beforeEach/afterEach props on RouterRoot to run code around navigations.
+- Example in App.tsx updates document.title based on route meta.
+
+API overview
+- src/router/types.ts contains the RouteDefinition and Guard types.
+- Layout: any component receiving { children } can be provided per route.
+- Guards: functions receiving { from, to } returning boolean or Promise<boolean>.
+
+Notes for Wails
+- HashRouter is recommended (no server config needed). BrowserRouter may work if your setup handles deep links.
