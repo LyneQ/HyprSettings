@@ -1,28 +1,73 @@
 .app-layout {
   display: flex;
-  flex-direction: row;
   height: 100vh;
+  background: var(--color-bg);
 }
 
 .app-header {
-  padding: 12px;
-  border-bottom: 1px solid var(--color-border);
-  background: var(--color-elev-2);
+  display: flex;
+  flex-direction: column;
+  width: 280px;
+  min-width: 240px;
+  padding: 20px 16px;
+  border-right: 1px solid var(--color-border);
+  border-bottom: 0; /* override global header bottom border */
+  background: linear-gradient(180deg, var(--color-elev-2), color-mix(in oklab, var(--color-elev-2) 85%, #000));
+}
+
+.app-header > strong {
+  font-size: 1.1rem;
+  letter-spacing: 0.2px;
+}
+
+.app-header hr {
+  margin: 14px 0 10px;
+  border: 0;
+  border-top: 1px solid var(--color-border);
+  opacity: 0.6;
 }
 
 .app-nav {
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  margin-left: auto;
-  margin-top: 8px;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.app-nav .hypr-link {
+  display: block;
+  color: inherit;
+  border-radius: 10px;
+  padding: 10px 12px;
+  text-decoration: none;
+  transition: background-color 0.15s ease, color 0.15s ease, transform 0.05s ease;
+}
+
+.app-nav .hypr-link:hover {
+  background: var(--color-elev-1);
+  color: var(--color-primary);
+}
+
+.app-nav .hypr-link:active {
+  transform: translateY(1px);
+}
+
+.app-nav .hypr-link .hypr-link__content {
+  gap: 0.5rem;
 }
 
 .app-main {
   flex: 1;
   overflow: auto;
+  padding: 24px;
 }
 
-a {
-    width: fit-content;
+@media (max-width: 980px) {
+  .app-header {
+    width: 220px;
+    padding: 16px 12px;
+  }
+  .app-main {
+    padding: 16px;
+  }
 }
