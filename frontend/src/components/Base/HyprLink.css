@@ -1,0 +1,22 @@
+/* Styles for HyprLink component */
+.hypr-link {
+    text-decoration: none; /* default: no underline */
+}
+
+.hypr-link--underline .hypr-link__label {
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    text-decoration-thickness: from-font;
+}
+
+.hypr-link__content {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    width: fit-content;
+    vertical-align: middle;
+}
+
+.hypr-link__label {
+    line-height: 1;
+}

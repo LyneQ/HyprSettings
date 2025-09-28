@@ -77,7 +77,7 @@ function wrapWithLayout(element: React.ReactNode, Layout?: React.ComponentType<{
 
 function buildRouteElements(defs: RouteDefinition[], deniedFallback?: React.ReactNode, loadingFallback?: React.ReactNode): React.ReactNode {
   return defs.map((def, idx) => {
-    const key = def.path + '::' + idx
+    const key = (def.path ?? '') + '::' + idx
 
     let element: React.ReactNode = def.element
 
