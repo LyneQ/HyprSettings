@@ -6,8 +6,9 @@ export default function AppLayout({children}: { children: React.ReactNode }) {
     return (
         <div className="app-layout">
             <header className="app-header">
-                <strong>HyprSettings</strong>
-                <hr/>
+                <div className="app-header-title">
+                    <strong>HyprSettings</strong>
+                </div>
                 <nav className="app-nav">
                     <HyprLink to="/settings/general" icon="Cog">General</HyprLink>
                     <HyprLink to="/settings/decoration" icon="Paintbrush">Decoration</HyprLink>
