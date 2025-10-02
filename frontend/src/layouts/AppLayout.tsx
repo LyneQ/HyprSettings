@@ -1,6 +1,6 @@
 import React from 'react'
 import './Layout.css'
-import HyprLink from '../components/Base/HyprLink'
+import HyprLink from '../components/Link/HyprLink'
 
 export default function AppLayout({children}: { children: React.ReactNode }) {
     return (
