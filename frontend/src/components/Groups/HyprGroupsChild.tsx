@@ -65,6 +65,7 @@ export default function HyprGroupsChild(
                         min={min}
                         max={max}
                         value={Number.isNaN(numVal) ? '' : numVal}
+                        style={{ appearance: 'textfield' }}
                         onChange={(e) => {
                             const v = e.target.value
                             handleChange(v === '' ? '' : Number(v))

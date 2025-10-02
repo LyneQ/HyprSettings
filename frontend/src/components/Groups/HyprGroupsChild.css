@@ -14,7 +14,7 @@
     }
 
     & >*:last-child {
-        border-right: 1px solid var(---color-elev-1);
+        border-right: 1px solid var(--color-elev-1);
         border-radius: 0 8px 8px 0;
     }
 }
@@ -24,6 +24,10 @@
     border-radius: 0;
     border: none;
     background-color: var(--color-elev-1);
+}
+
+.hypr-groups-child-input[type=number] {
+    width: 0.875rem;
 }
 
 .hypr-groups-child-input:focus {
@@ -40,4 +44,5 @@
 
 .hypr-groups-child__number-input {
     -moz-appearance: textfield;
+    appearance: textfield;
 }
