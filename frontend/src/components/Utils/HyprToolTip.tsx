@@ -11,7 +11,7 @@ interface HyprToolTipProps {
 
 export default function HyprToolTip({children, format}: HyprToolTipProps) {
 
-    const [tooltipVisible, setTooltipVisible] = useState<boolean>(true);
+    const [tooltipVisible, setTooltipVisible] = useState<boolean>(false);
 
     const handleMouseEnter = () => {
         setTooltipVisible(true);
