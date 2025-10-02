@@ -18,7 +18,7 @@ export default function HyprToolTip({children, format}: HyprToolTipProps) {
     }
 
     const handleMouseLeave = () => {
-        setTooltipVisible(false);E
+        setTooltipVisible(false);
     }
 
     switch (format) {
