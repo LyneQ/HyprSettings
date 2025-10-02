@@ -113,13 +113,18 @@ export default function HyprGroupsChild(
         case 'switch': {
             const checked = Boolean(value)
             return (
-                <input
-                    type="checkbox"
-                    className={className}
-                    checked={checked}
-                    onChange={(e) => handleChange(e.target.checked)}
-                    {...rest}
-                />
+                <label className={`hypr-switch ${className ?? ''}`}>
+                    <input
+                        type="checkbox"
+                        className="hypr-switch__input"
+                        checked={checked}
+                        onChange={(e) => handleChange(e.target.checked)}
+                        {...rest}
+                    />
+                    <span className="hypr-switch__track">
+                        <span className="hypr-switch__thumb" />
+                    </span>
+                </label>
             )
         }
         default:
