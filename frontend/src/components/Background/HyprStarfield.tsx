@@ -43,12 +43,12 @@ export default function HyprStarfield({delayMs = 10000}: Props) {
             height              = Math.floor(h)
             canvas.width        = Math.floor(width * dpr)
             canvas.height       = Math.floor(height * dpr)
-            canvas.style.width  = width + 'px'
-            canvas.style.height = height + 'px'
             ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
 
             // create stars based on area
             const area        = width * height;
+            canvas.width      = Math.floor(width * dpr)
+            canvas.height     = Math.floor(height * dpr)
             const density     = 0.00018;
             const targetCount = Math.max(60, Math.min(800, Math.floor(area * density)));
             stars             = new Array(targetCount).fill(0).map(() => {
@@ -117,8 +117,11 @@ export default function HyprStarfield({delayMs = 10000}: Props) {
         const parent = canvas.parentElement!;
         const ro     = new ResizeObserver((entries) => {
             for (const entry of entries) {
-                const cr = entry.contentRect
-                resize(cr.width, cr.height)
+                // Use the element's client box (includes padding) so the canvas truly fills the padded area
+                const el = entry.target as HTMLElement
+                const w  = el.clientWidth
+                const h  = el.clientHeight
+                resize(w, h)
             }
         })
         ro.observe(parent)

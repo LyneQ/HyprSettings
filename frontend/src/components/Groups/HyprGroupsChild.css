@@ -1,4 +1,6 @@
 
+/* ============================= [BASE] ============================= */
+/* ============================= [TYPE: NUMBER] ============================= */
 .hypr-groups-child__number-container {
     display: flex;
     align-items: center;
@@ -94,6 +96,7 @@
     appearance: textfield;
 }
 
+/* ============================= [TYPE: SWITCH] ============================= */
 /* Toggle switch */
 .hypr-switch {
     position: relative;
