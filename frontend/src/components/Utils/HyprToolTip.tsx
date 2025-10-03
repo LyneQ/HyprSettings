@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {CircleQuestionMark} from "lucide-react"
+import React, { useState } from 'react';
+import { CircleQuestionMark } from 'lucide-react';
 import './HyprToolTip.css';
 
 type FormatType = 'icon' | 'text';
@@ -9,17 +9,16 @@ interface HyprToolTipProps {
     children: React.ReactNode;
 }
 
-export default function HyprToolTip({children, format}: HyprToolTipProps) {
-
+export default function HyprToolTip({ children, format }: HyprToolTipProps) {
     const [tooltipVisible, setTooltipVisible] = useState<boolean>(false);
 
     const handleMouseEnter = () => {
         setTooltipVisible(true);
-    }
+    };
 
     const handleMouseLeave = () => {
         setTooltipVisible(false);
-    }
+    };
 
     switch (format) {
         case 'icon':
@@ -28,14 +27,14 @@ export default function HyprToolTip({children, format}: HyprToolTipProps) {
                     <CircleQuestionMark className="hypr-tooltip-icon-main" />
                     {tooltipVisible && <div className="hypr-tooltip-content">{children}</div>}
                 </div>
-            )
+            );
         case 'text':
             return (
                 <div className="hypr-tooltip" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
                     <p className="hypr-tooltip-text-main">*</p>
                     {tooltipVisible && <div className="hypr-tooltip-content">{children}</div>}
                 </div>
-            )
+            );
     }
 }
 

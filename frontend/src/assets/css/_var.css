@@ -1,24 +1,24 @@
 /* Design tokens: Dark theme with black background and red as primary */
 :root {
-  color-scheme: dark;
+    color-scheme: dark;
 
-  /* Backgrounds */
-  --color-bg: #161618;           /* pure black */
-  --color-elev-1: #131313;       /* subtle elevation */
-  --color-elev-2: #111111;       /* card/header */
+    /* Backgrounds */
+    --color-bg: #161618; /* pure black */
+    --color-elev-1: #131313; /* subtle elevation */
+    --color-elev-2: #111111; /* card/header */
 
-  /* Text */
-  --color-text: #e5e7eb;         /* gray-200 */
-  --color-text-muted: #9ca3af;   /* gray-400 */
+    /* Text */
+    --color-text: #e5e7eb; /* gray-200 */
+    --color-text-muted: #9ca3af; /* gray-400 */
 
-  /* Borders/lines */
-  --color-border: #1f2937;       /* gray-800 */
+    /* Borders/lines */
+    --color-border: #1f2937; /* gray-800 */
 
-  /* Primary (red) */
-  --color-primary: #ef4444;      /* red-500 */
-  --color-primary-600: #dc2626;  /* red-600 */
-  --color-primary-700: #b91c1c;  /* red-700 */
+    /* Primary (red) */
+    --color-primary: #ef4444; /* red-500 */
+    --color-primary-600: #dc2626; /* red-600 */
+    --color-primary-700: #b91c1c; /* red-700 */
 
-  /* Effects */
-  --focus-ring-color: rgba(239, 68, 68, 0.75);
+    /* Effects */
+    --focus-ring-color: rgba(239, 68, 68, 0.75);
 }
