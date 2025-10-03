@@ -32,7 +32,7 @@ func main() {
 		Linux: &linux.Options{
 			WindowIsTranslucent: false,
 			WebviewGpuPolicy:    linux.WebviewGpuPolicyNever,
-			ProgramName:         "HyprSettings", //TODO: Rename to HyprSettings when building for production
+			ProgramName:         "HyprSettings",
 		},
 	})
 
