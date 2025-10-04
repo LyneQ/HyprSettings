@@ -3,3 +3,7 @@
 import {Core} from '../models';
 
 export function GetCoreFiles():Promise<Array<Core.CoreFile>>;
+
+export function GetHyprpaperConfig():Promise<string>;
+
+export function UpdateHyprpaperWallpaper(arg1:string):Promise<void>;

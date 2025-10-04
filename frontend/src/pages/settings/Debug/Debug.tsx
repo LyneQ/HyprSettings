@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
 import './style.css';
 
 // Extend Performance interface for Chrome-specific memory API
@@ -7,12 +6,6 @@ interface PerformanceMemory {
     jsHeapSizeLimit: number;
     totalJSHeapSize: number;
     usedJSHeapSize: number;
-}
-
-declare global {
-    interface Performance {
-        memory?: PerformanceMemory;
-    }
 }
 
 // Type definitions for Wails runtime
@@ -51,7 +44,6 @@ interface DebugData {
 }
 
 export default function DebugSettings() {
-    const location = useLocation();
     const [debugData, setDebugData] = useState<DebugData>({});
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -115,6 +107,7 @@ export default function DebugSettings() {
 
             if (wailsApp && wailsApp.GetCoreFiles) {
                 coreFiles = await wailsApp.GetCoreFiles().catch(() => []);
+                console.log(coreFiles);
             }
 
             setDebugData({

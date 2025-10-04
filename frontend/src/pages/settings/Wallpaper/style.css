@@ -1,2 +1,134 @@
 .page--wallpaper {
+    padding: 20px;
+    max-width: 1200px;
+    font-size: 12px;
+}
+
+.page--wallpaper h1 {
+    margin-bottom: 10px;
+}
+
+.page--wallpaper > p {
+    color: var(--color-text-muted);
+    margin-bottom: 20px;
+}
+
+.wallpaper-loading {
+    color: var(--color-text);
+    background-color: var(--color-elev-2);
+    padding: 12px;
+    border-radius: 6px;
+    margin: 16px 0;
+    border: 1px solid var(--color-border);
+}
+
+.wallpaper-error {
+    color: var(--color-primary);
+    background-color: var(--color-elev-2);
+    padding: 12px;
+    border-radius: 6px;
+    margin: 16px 0;
+    border: 1px solid var(--color-primary-600);
+}
+
+.wallpaper-success {
+    color: #10b981;
+    background-color: var(--color-elev-2);
+    padding: 12px;
+    border-radius: 6px;
+    margin: 16px 0;
+    border: 1px solid #10b981;
+}
+
+.wallpaper-section {
+    background-color: var(--color-elev-2);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.wallpaper-section h3 {
+    margin: 0 0 16px 0;
+    color: var(--color-text);
+    font-size: 18px;
+    font-weight: 600;
+    border-bottom: 2px solid var(--color-primary);
+    padding-bottom: 8px;
+}
+
+.wallpaper-help {
+    color: var(--color-text-muted);
+    margin-bottom: 16px;
+    font-size: 13px;
+}
+
+.wallpaper-input-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.wallpaper-input-container label {
+    font-weight: 600;
+    color: var(--color-text);
+    min-width: 60px;
+}
+
+.wallpaper-info {
+    background-color: var(--color-elev-2);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.wallpaper-info h4 {
+    margin: 0 0 12px 0;
+    color: var(--color-text);
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.wallpaper-info p {
+    color: var(--color-text-muted);
+    margin-bottom: 8px;
+    font-size: 13px;
+}
+
+.wallpaper-info pre {
+    background-color: var(--color-elev-1);
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    padding: 12px;
+    margin-top: 8px;
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+    color: var(--color-text);
+    overflow-x: auto;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .page--wallpaper {
+        padding: 12px;
+    }
+
+    .wallpaper-input-container {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .wallpaper-input-container label {
+        min-width: auto;
+        margin-bottom: 4px;
+    }
+
+    .wallpaper-section {
+        padding: 12px;
+    }
+
+    .wallpaper-info {
+        padding: 12px;
+    }
 }

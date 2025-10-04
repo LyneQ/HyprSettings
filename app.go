@@ -40,5 +40,15 @@ func (a *App) startup(ctx context.Context) {
 }
 
 func (a *App) GetCoreFiles() []Core.CoreFile {
-	return Core.HyprlandConfigFiles
+	hyprlandFiles := Core.HyprlandConfigFiles
+	hyprpaperFiles := Core.GetHyprpaperFiles()
+	return append(hyprlandFiles, hyprpaperFiles...)
+}
+
+func (a *App) GetHyprpaperConfig() (string, error) {
+	return Core.GetHyprpaperConfig()
+}
+
+func (a *App) UpdateHyprpaperWallpaper(newPath string) error {
+	return Core.UpdateHyprpaperWallpaper(newPath)
 }

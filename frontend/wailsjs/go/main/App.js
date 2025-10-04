@@ -5,3 +5,11 @@
 export function GetCoreFiles() {
   return window['go']['main']['App']['GetCoreFiles']();
 }
+
+export function GetHyprpaperConfig() {
+  return window['go']['main']['App']['GetHyprpaperConfig']();
+}
+
+export function UpdateHyprpaperWallpaper(arg1) {
+  return window['go']['main']['App']['UpdateHyprpaperWallpaper'](arg1);
+}

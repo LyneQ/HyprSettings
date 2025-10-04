@@ -79,6 +79,89 @@ func GetHyprlandFiles() []CoreFile {
 	return coreFiles
 }
 
+// GetHyprpaperFiles retrieves the Hyprpaper configuration file.
+func GetHyprpaperFiles() []CoreFile {
+
+	runtime.LogDebugf(logCtx, "Looking for hyprpaper.conf in: '%s'", defaultHyprlandConfigDir)
+
+	configFile, err := os.Open(defaultHyprlandConfigDir + "hyprpaper.conf")
+	if err != nil {
+		runtime.LogErrorf(logCtx, "Error opening hyprpaper config file: %s", err.Error())
+		return []CoreFile{}
+	}
+
+	defer configFile.Close()
+
+	runtime.LogInfof(logCtx, "Hyprpaper config file found in %v", configFile.Name())
+
+	// Get the file info and content
+	coreFile := GetCoreFileFromPath(configFile.Name())
+
+	runtime.LogInfof(logCtx, "Loaded hyprpaper.conf (%v bytes)", coreFile.Size)
+
+	return []CoreFile{coreFile}
+}
+
+// GetHyprpaperConfig reads and returns the content of hyprpaper.conf
+func GetHyprpaperConfig() (string, error) {
+	configPath := defaultHyprlandConfigDir + "hyprpaper.conf"
+	content, err := os.ReadFile(configPath)
+	if err != nil {
+		runtime.LogErrorf(logCtx, "Error reading hyprpaper config: %s", err.Error())
+		return "", err
+	}
+	return string(content), nil
+}
+
+// UpdateHyprpaperWallpaper updates all wallpaper paths in hyprpaper.conf
+func UpdateHyprpaperWallpaper(newPath string) error {
+	configPath := defaultHyprlandConfigDir + "hyprpaper.conf"
+
+	content, err := os.ReadFile(configPath)
+	if err != nil {
+		runtime.LogErrorf(logCtx, "Error reading hyprpaper config: %s", err.Error())
+		return err
+	}
+
+	// Expand the new path if it starts with ~/
+	expandedNewPath := expandPath(newPath)
+
+	lines := strings.Split(string(content), "\n")
+	var updatedLines []string
+
+	for _, line := range lines {
+		trimmedLine := strings.TrimSpace(line)
+
+		// Update preload lines
+		if strings.HasPrefix(trimmedLine, "preload") {
+			updatedLines = append(updatedLines, "preload = "+newPath)
+		} else if strings.HasPrefix(trimmedLine, "wallpaper") {
+			// Update wallpaper lines - keep monitor name, update path
+			parts := strings.SplitN(trimmedLine, ",", 2)
+			if len(parts) == 2 {
+				monitorPart := strings.TrimSpace(strings.TrimPrefix(parts[0], "wallpaper"))
+				monitorPart = strings.TrimPrefix(monitorPart, "=")
+				monitorPart = strings.TrimSpace(monitorPart)
+				updatedLines = append(updatedLines, "wallpaper = "+monitorPart+", "+newPath)
+			} else {
+				updatedLines = append(updatedLines, line)
+			}
+		} else {
+			updatedLines = append(updatedLines, line)
+		}
+	}
+
+	newContent := strings.Join(updatedLines, "\n")
+	err = os.WriteFile(configPath, []byte(newContent), 0644)
+	if err != nil {
+		runtime.LogErrorf(logCtx, "Error writing hyprpaper config: %s", err.Error())
+		return err
+	}
+
+	runtime.LogInfof(logCtx, "Updated hyprpaper.conf with new wallpaper path: %s (expanded: %s)", newPath, expandedNewPath)
+	return nil
+}
+
 // GetCoreFileFromPath retrieves a CoreFile from a given path.
 func GetCoreFileFromPath(path string) CoreFile {
 	fileInfo, err := os.Stat(path)
