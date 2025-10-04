@@ -3,11 +3,40 @@ package Core
 import (
 	"context"
 	"os"
+	"path/filepath"
+	"regexp"
+	"strings"
 
 	"github.com/wailsapp/wails/v2/pkg/runtime"
 )
 
+//======================================================================================================================
+// Type definitions
+//======================================================================================================================
+
+type CoreFile struct {
+	Path       string
+	Name       string
+	Size       int64
+	Permission os.FileMode
+	content    []byte
+}
+
+//======================================================================================================================
+// Shared variables
+//======================================================================================================================
+
 var logCtx context.Context
+
+// defaultHyprlandConfigDir is the default location of the Hyprland config file.
+var defaultHyprlandConfigDir = os.Getenv("HOME") + "/" + ".config/hypr/"
+
+// HyprlandConfigFiles is a list of CoreFile objects that represent the Hyprland configuration files.
+var HyprlandConfigFiles []CoreFile
+
+//======================================================================================================================
+// Public functions
+//======================================================================================================================
 
 // Init stores the application context so core can use Wails runtime logging.
 func Init(ctx context.Context) {
@@ -15,11 +44,11 @@ func Init(ctx context.Context) {
 }
 
 // GetHyprlandEntrypoint retrieves the Hyprland configuration entrypoint based on environment variables.
-func GetHyprlandEntrypoint() string {
-	homeDir := os.Getenv("HOME")
-	runtime.LogDebugf(logCtx, "HOME value: '%s'", homeDir)
+func GetHyprlandFiles() []CoreFile {
 
-	configFile, err := os.Open(homeDir + "/.config/hypr/hyprland.conf")
+	runtime.LogDebugf(logCtx, "HOME value: '%s'", defaultHyprlandConfigDir)
+
+	configFile, err := os.Open(defaultHyprlandConfigDir + "hyprland.conf")
 	if err != nil {
 		runtime.LogFatalf(logCtx, "Error opening config file: %s. The app cannot run without a Hyprland config file", err.Error())
 	}
@@ -27,5 +56,82 @@ func GetHyprlandEntrypoint() string {
 	defer configFile.Close()
 
 	runtime.LogInfof(logCtx, "Hyprland entry file found in %v", configFile.Name())
-	return configFile.Name()
+
+	// content of the entry file
+	configFileContent, err := os.ReadFile(configFile.Name())
+	if err != nil {
+		runtime.LogFatalf(logCtx, "Error reading config file: %s. The app cannot run without a Hyprland config file", err.Error())
+	}
+
+	coreFiles := make([]CoreFile, 0)
+	for _, path := range scanForSources(string(configFileContent)) {
+		expandedPath := expandPath(path)
+		coreFiles = append(coreFiles, GetCoreFileFromPath(expandedPath))
+	}
+
+	runtime.LogInfof(logCtx, "Found %v sources", len(coreFiles))
+	runtime.LogInfof(logCtx, "Sources")
+	for _, coreFile := range coreFiles {
+		runtime.LogInfof(logCtx, "  %v (%v bytes)", coreFile.Name, coreFile.Size)
+	}
+
+	HyprlandConfigFiles = coreFiles
+	return coreFiles
+}
+
+// GetCoreFileFromPath retrieves a CoreFile from a given path.
+func GetCoreFileFromPath(path string) CoreFile {
+	fileInfo, err := os.Stat(path)
+	if err != nil {
+		runtime.LogErrorf(logCtx, "Error getting file info: %s", err.Error())
+		return CoreFile{}
+	}
+
+	content, err := os.ReadFile(path)
+	if err != nil {
+		runtime.LogErrorf(logCtx, "Error reading file: %s", err.Error())
+		return CoreFile{}
+	}
+
+	return CoreFile{
+		Path:       path,
+		Name:       fileInfo.Name(),
+		Size:       fileInfo.Size(),
+		Permission: fileInfo.Mode(),
+		content:    content,
+	}
+}
+
+//======================================================================================================================
+// Private functions
+//======================================================================================================================
+
+// scanForSources scans for source directive and returns a list of sources.
+func scanForSources(content string) []string {
+	sourcesRegex := `(source)\s*(=)\s*([^#\n]*)`
+
+	var sources []string
+	re := regexp.MustCompile(sourcesRegex)
+	matches := re.FindAllStringSubmatch(content, -1)
+
+	for _, match := range matches {
+		if len(match) >= 4 {
+			sources = append(sources, match[3])
+		}
+	}
+
+	return sources
+}
+
+// expandPath expands ~ to the home directory and resolves the full path
+func expandPath(path string) string {
+	path = strings.TrimSpace(path)
+
+	if strings.HasPrefix(path, "~/") {
+		home := os.Getenv("HOME")
+		path = filepath.Join(home, path[2:])
+	}
+
+	// Clean the path to remove any extra slashes or dots
+	return filepath.Clean(path)
 }
