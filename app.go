@@ -38,3 +38,7 @@ func (a *App) startup(ctx context.Context) {
 	Core.Init(ctx)
 	_ = Core.GetHyprlandFiles()
 }
+
+func (a *App) GetCoreFiles() []Core.CoreFile {
+	return Core.HyprlandConfigFiles
+}
