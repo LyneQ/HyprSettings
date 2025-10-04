@@ -43,7 +43,7 @@ func Init(ctx context.Context) {
 	logCtx = ctx
 }
 
-// GetHyprlandEntrypoint retrieves the Hyprland configuration entrypoint based on environment variables.
+// GetHyprlandFiles GetHyprlandEntrypoint retrieves the Hyprland configuration entrypoint based on environment variables.
 func GetHyprlandFiles() []CoreFile {
 
 	runtime.LogDebugf(logCtx, "HOME value: '%s'", defaultHyprlandConfigDir)
