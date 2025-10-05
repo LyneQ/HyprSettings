@@ -18,7 +18,7 @@ import LayoutSettings from './pages/settings/Layout/Layout';
 import Update from './pages/settings/Update/Update';
 import Wallpaper from './pages/settings/Wallpaper/Wallpaper';
 import WindowSettings from './pages/settings/Window/Window';
-import './App.css';
+import './App.scss';
 import Design from './pages/Design';
 
 const routes: RouteDefinition[] = [

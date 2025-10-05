@@ -1,0 +1,13 @@
+@import './assets/scss/mixins';
+
+.app-fallback {
+  padding: 16px;
+
+  @include below-tablet {
+    padding: 12px;
+  }
+
+  @include mobile-only {
+    padding: 8px;
+  }
+}

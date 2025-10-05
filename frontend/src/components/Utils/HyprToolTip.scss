@@ -1,0 +1,61 @@
+@import '../../assets/scss/mixins';
+
+.hypr-tooltip {
+  margin: 0;
+  padding: 0;
+  height: 1rem;
+  position: relative;
+  display: inline-block;
+}
+
+.hypr-tooltip-icon-main,
+.hypr-tooltip-text-main {
+  cursor: help;
+  color: var(--color-primary);
+  width: 1rem;
+  margin: 0;
+  padding: 0;
+  transform: translateY(-5px);
+
+  @include below-tablet {
+    width: 1.25rem;
+    min-height: 44px; // Better touch target
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.hypr-tooltip-content {
+  position: absolute;
+  z-index: 1000;
+  background-color: var(--color-elev-1);
+  border: 1px solid var(--color-border);
+  padding: 0.5rem;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  font-size: 0.875rem;
+  transform: translateY(-15px);
+  max-width: 200px;
+  width: max-content;
+  max-height: 100px;
+  overflow-y: auto;
+
+  @include below-tablet {
+    max-width: 280px;
+    font-size: 0.9375rem; // Slightly larger for readability
+    padding: 0.75rem;
+    max-height: 150px;
+  }
+
+  @include mobile-only {
+    max-width: calc(100vw - 32px); // Account for screen edges
+    left: 50%;
+    transform: translateX(-50%) translateY(-15px);
+  }
+
+  & > * {
+    margin: 0;
+    padding: 0;
+  }
+}

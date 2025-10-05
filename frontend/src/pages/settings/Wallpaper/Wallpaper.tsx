@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import './style.css';
+import './style.scss';
 import HyprGroupsChild from '../../../components/Groups/HyprGroupsChild';
 
 export default function Wallpaper() {
@@ -38,7 +38,7 @@ export default function Wallpaper() {
         try {
             if (wailsApp && wailsApp.GetHyprpaperConfig) {
                 const config = await wailsApp.GetHyprpaperConfig();
-                
+
                 // Parse the config to extract the wallpaper path
                 const lines = config.split('\n');
                 for (const line of lines) {
@@ -71,7 +71,7 @@ export default function Wallpaper() {
             if (wailsApp && wailsApp.UpdateHyprpaperWallpaper) {
                 await wailsApp.UpdateHyprpaperWallpaper(pathStr);
                 setSuccess('Wallpaper path updated successfully!');
-                
+
                 // Clear success message after 3 seconds
                 setTimeout(() => setSuccess(null), 3000);
             }
@@ -104,17 +104,6 @@ export default function Wallpaper() {
                         id="wallpaper-path"
                     />
                 </div>
-            </div>
-
-            <div className="wallpaper-info">
-                <h4>Current Configuration</h4>
-                <p>This will update all preload and wallpaper entries in your hyprpaper.conf file.</p>
-                <p>Example format:</p>
-                <pre>
-                    preload = ~/Pictures/wallpaper/abs.jpg{'\n'}
-                    wallpaper = DP-2, ~/Pictures/wallpaper/abs.jpg{'\n'}
-                    wallpaper = DP-3, ~/Pictures/wallpaper/abs.jpg
-                </pre>
             </div>
         </div>
     );

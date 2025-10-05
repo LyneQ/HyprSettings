@@ -1,0 +1,23 @@
+@import '../../../assets/scss/mixins';
+
+.home {
+  padding: 16px;
+
+  @include below-tablet {
+    padding: 12px;
+  }
+
+  @include mobile-only {
+    padding: 8px;
+  }
+}
+
+.home-nav {
+  display: flex;
+  gap: 12px;
+
+  @include below-tablet {
+    flex-direction: column;
+    gap: 8px;
+  }
+}

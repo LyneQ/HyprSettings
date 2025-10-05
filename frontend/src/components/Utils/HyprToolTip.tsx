@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { CircleQuestionMark } from 'lucide-react';
-import './HyprToolTip.css';
+import './HyprToolTip.scss';
 
 type FormatType = 'icon' | 'text';
 

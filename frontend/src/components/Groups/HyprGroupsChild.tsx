@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import './HyprGroupsChild.css';
+import './HyprGroupsChild.scss';
 
 type VariableType = number | string | boolean;
 
@@ -18,6 +18,7 @@ interface HyprGroupsChildProps extends React.HTMLAttributes<HTMLElement> {
     className?: string;
     onChangeValue?: (value: VariableType) => void;
     helpText?: string;
+    placeholder?: string;
 }
 
 export default function HyprGroupsChild({
@@ -29,6 +30,7 @@ export default function HyprGroupsChild({
     selectOptions,
     onChangeValue,
     helpText,
+    placeholder,
     ...rest
 }: HyprGroupsChildProps) {
     const [value, setValue] = useState<VariableType>(variable);
@@ -70,7 +72,7 @@ export default function HyprGroupsChild({
                         min={min}
                         max={max}
                         value={Number.isNaN(numVal) ? '' : numVal}
-                        style={{ appearance: 'textfield' }}
+                        style={{ appearance: 'textfield', width: 'fit-content' }}
                         onChange={(e) => {
                             const v = e.target.value;
                             handleChange(v === '' ? '' : Number(v));

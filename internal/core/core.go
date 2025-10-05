@@ -123,7 +123,6 @@ func UpdateHyprpaperWallpaper(newPath string) error {
 		return err
 	}
 
-	// Expand the new path if it starts with ~/
 	expandedNewPath := expandPath(newPath)
 
 	lines := strings.Split(string(content), "\n")
@@ -132,11 +131,10 @@ func UpdateHyprpaperWallpaper(newPath string) error {
 	for _, line := range lines {
 		trimmedLine := strings.TrimSpace(line)
 
-		// Update preload lines
 		if strings.HasPrefix(trimmedLine, "preload") {
 			updatedLines = append(updatedLines, "preload = "+newPath)
 		} else if strings.HasPrefix(trimmedLine, "wallpaper") {
-			// Update wallpaper lines - keep monitor name, update path
+
 			parts := strings.SplitN(trimmedLine, ",", 2)
 			if len(parts) == 2 {
 				monitorPart := strings.TrimSpace(strings.TrimPrefix(parts[0], "wallpaper"))
@@ -215,6 +213,5 @@ func expandPath(path string) string {
 		path = filepath.Join(home, path[2:])
 	}
 
-	// Clean the path to remove any extra slashes or dots
 	return filepath.Clean(path)
 }

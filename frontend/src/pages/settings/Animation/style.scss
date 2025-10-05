@@ -1,0 +1,18 @@
+@import '../../../assets/scss/mixins';
+
+.page--animation {
+  padding: 20px;
+  max-width: 1200px;
+
+  @include below-desktop {
+    padding: 16px;
+  }
+
+  @include below-tablet {
+    padding: 12px;
+  }
+
+  @include mobile-only {
+    padding: 8px;
+  }
+}

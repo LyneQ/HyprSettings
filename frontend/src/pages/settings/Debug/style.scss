@@ -1,0 +1,184 @@
+@import '../../../assets/scss/mixins';
+
+.page--settings-debug {
+  padding: 20px;
+  max-width: 1200px;
+  font-size: 12px;
+
+  h1 {
+    margin-bottom: 10px;
+  }
+
+  & > p {
+    color: var(--color-text-muted);
+    margin-bottom: 20px;
+  }
+
+  @include below-tablet {
+    padding: 12px;
+  }
+}
+
+.debug-warning {
+  color: var(--color-primary);
+  background-color: var(--color-elev-2);
+  padding: 12px;
+  border-radius: 6px;
+  margin: 16px 0;
+  border: 1px solid var(--color-border);
+}
+
+.debug-loading {
+  color: var(--color-text);
+  background-color: var(--color-elev-2);
+  padding: 12px;
+  border-radius: 6px;
+  margin: 16px 0;
+  border: 1px solid var(--color-border);
+}
+
+.debug-error {
+  color: var(--color-primary);
+  background-color: var(--color-elev-2);
+  padding: 12px;
+  border-radius: 6px;
+  margin: 16px 0;
+  border: 1px solid var(--color-primary-600);
+}
+
+.debug-refresh-btn {
+  background-color: var(--color-primary);
+  color: white;
+  border: 1px solid var(--color-primary-600);
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  margin: 20px 0;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: var(--color-primary-600);
+  }
+
+  &:active {
+    background-color: var(--color-primary-700);
+  }
+}
+
+.debug-section {
+  background-color: var(--color-elev-2);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+
+  h3 {
+    margin: 0 0 16px 0;
+    color: var(--color-text);
+    font-size: 18px;
+    font-weight: 600;
+    border-bottom: 2px solid var(--color-primary);
+    padding-bottom: 8px;
+  }
+
+  @include below-tablet {
+    padding: 12px;
+  }
+}
+
+.debug-content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.debug-item {
+  display: flex;
+  align-items: flex-start;
+  padding: 8px;
+  background-color: var(--color-elev-1);
+  border-radius: 4px;
+  border: 1px solid var(--color-border);
+
+  @include below-tablet {
+    flex-direction: column;
+  }
+}
+
+.debug-key {
+  font-weight: 600;
+  color: var(--color-text);
+  min-width: 200px;
+  flex-shrink: 0;
+  padding-right: 12px;
+
+  @include below-tablet {
+    min-width: auto;
+    margin-bottom: 4px;
+  }
+}
+
+.debug-value {
+  color: var(--color-text-muted);
+  word-break: break-word;
+  font-family: 'Courier New', monospace;
+  white-space: pre-wrap;
+}
+
+.debug-subsection {
+  background-color: var(--color-elev-1);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  padding: 16px;
+  margin-bottom: 12px;
+
+  h4 {
+    margin: 0 0 12px 0;
+    color: var(--color-text);
+    font-size: 16px;
+    font-weight: 600;
+  }
+}
+
+.debug-clipboard-btn {
+  background-color: var(--color-primary);
+  color: white;
+  border: 1px solid var(--color-primary-600);
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-bottom: 12px;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: var(--color-primary-600);
+  }
+
+  &:active {
+    background-color: var(--color-primary-700);
+  }
+}
+
+.debug-clipboard-content {
+  background-color: var(--color-elev-1);
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  padding: 12px;
+  margin-top: 8px;
+
+  pre {
+    margin: 0;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+    color: var(--color-text);
+  }
+
+  em {
+    color: var(--color-text-muted);
+  }
+}

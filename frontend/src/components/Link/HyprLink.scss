@@ -1,0 +1,45 @@
+@import '../../assets/scss/mixins';
+
+// Styles for HyprLink component
+.hypr-link {
+  text-decoration: none; // default: no underline
+
+  @include below-tablet {
+    min-height: 44px; // Better touch target
+    display: inline-flex;
+    align-items: center;
+  }
+
+  &--underline {
+    .hypr-link__label {
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      text-decoration-thickness: from-font;
+
+      @include below-tablet {
+        text-underline-offset: 3px;
+      }
+    }
+  }
+}
+
+.hypr-link__content {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  width: fit-content;
+  vertical-align: middle;
+
+  @include below-tablet {
+    gap: 0.5rem; // More space between icon and text
+    padding: 0.25rem;
+  }
+}
+
+.hypr-link__label {
+  line-height: 1;
+
+  @include below-tablet {
+    font-size: 1rem; // Slightly larger for readability
+  }
+}

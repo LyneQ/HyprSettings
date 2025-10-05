@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import * as Icons from 'lucide-react';
-import './HyprLink.css';
+import './HyprLink.scss';
 
 export type LucideIconName = keyof typeof Icons;
 

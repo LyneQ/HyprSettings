@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import './HyprStarfield.css';
+import './HyprStarfield.scss';
 
 type Props = {
     delayMs?: number;
