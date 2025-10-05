@@ -71,8 +71,6 @@ export default function Wallpaper() {
             if (wailsApp && wailsApp.UpdateHyprpaperWallpaper) {
                 await wailsApp.UpdateHyprpaperWallpaper(pathStr);
                 setSuccess('Wallpaper path updated successfully!');
-
-                // Clear success message after 3 seconds
                 setTimeout(() => setSuccess(null), 3000);
             }
         } catch (err) {

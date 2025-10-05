@@ -159,15 +159,22 @@ func UpdateHyprpaperWallpaper(newPath string) error {
 
 	runtime.LogInfof(logCtx, "Updated hyprpaper.conf with new wallpaper path: %s (expanded: %s)", newPath, expandedNewPath)
 
-	runtime.LogInfof(logCtx, "Restarting hyprpaper service to apply wallpaper changes...")
-	// Use systemctl to restart hyprpaper.service
-	restartCmd := exec.Command("systemctl", "--user", "restart", "hyprpaper.service")
-	if err := restartCmd.Run(); err != nil {
-		runtime.LogErrorf(logCtx, "Error restarting hyprpaper service: %s", err.Error())
+	// Restart hyprpaper to apply changes
+	runtime.LogInfof(logCtx, "Restarting hyprpaper to apply wallpaper changes...")
+	
+	// Kill existing hyprpaper process
+	killCmd := exec.Command("killall", "hyprpaper")
+	if err := killCmd.Run(); err != nil {
+		runtime.LogWarningf(logCtx, "Failed to kill hyprpaper (may not be running): %s", err.Error())
+	}
+	// Start hyprpaper in background
+	startCmd := exec.Command("hyprpaper")
+	if err := startCmd.Start(); err != nil {
+		runtime.LogErrorf(logCtx, "Error starting hyprpaper: %s", err.Error())
 		return err
 	}
 
-	runtime.LogInfof(logCtx, "Hyprpaper service restarted successfully")
+	runtime.LogInfof(logCtx, "Hyprpaper restarted successfully")
 	return nil
 }
 
