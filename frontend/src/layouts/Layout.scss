@@ -27,6 +27,7 @@
   @include below-tablet {
     width: 100%;
     max-height: 60px;
+    height: 100%;
     min-width: 100%;
     border-right: 0;
     border-bottom: 1px solid var(--color-border);
@@ -97,8 +98,8 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  padding: 0 16px 24px 16px;
-  margin-bottom: 24px;
+  flex: 1;
+  overflow-y: auto;
 
   @include below-tablet {
     display: none;
@@ -113,7 +114,6 @@
     margin: 0;
     overflow-y: auto;
     flex-direction: column;
-    justify-content: space-between;
   }
 
   &.app-nav--open {
@@ -124,7 +124,8 @@
 }
 
 .app-nav-links {
-  display: contents;
+  padding: 0 16px 0 16px;
+
 
   @include below-tablet {
     display: flex;
@@ -170,9 +171,7 @@
 }
 
 .app-nav-bottom {
-  position: fixed;
-  bottom: 0;
-  width: 260px;
+  width: 100%;
   background: linear-gradient(180deg, var(--color-elev-2), color-mix(in oklab, var(--color-elev-2) 85%, #000));
   margin-top: auto;
   display: flex;
@@ -181,14 +180,9 @@
   gap: 10px;
   padding: 10px 10px 12px 10px;
   border-top: 1px solid var(--color-border);
-
-  @include below-desktop {
-    width: 200px;
-  }
+  flex-shrink: 0;
 
   @include below-tablet {
-    width: 100%;
-    position: relative;
     padding: 12px 16px;
   }
 }

@@ -30,8 +30,8 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
     return (
         <div className="app-layout">
             <header className="app-header">
-                <button 
-                    className="app-burger-menu" 
+                <button
+                    className="app-burger-menu"
                     onClick={() => setMenuOpen(!menuOpen)}
                     aria-label="Toggle menu"
                     aria-expanded={menuOpen}
