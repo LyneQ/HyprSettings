@@ -1,12 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import './style.scss';
 import HyprGroupsChild from '../../../components/Groups/HyprGroupsChild';
 
 export default function Wallpaper() {
     const [wallpaperPath, setWallpaperPath] = useState<string>('');
+    const [inputValue, setInputValue] = useState<string>('');
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [success, setSuccess] = useState<string | null>(null);
+    //@ts-ignore
+    const debounceTimerRef = useRef<NodeJS.Timeout | null>(null);
 
     //======================================================================================
     //NOTE: These modules may not exist during build, so we load them dynamically at runtime
@@ -32,6 +35,24 @@ export default function Wallpaper() {
         }
     }, [wailsApp]);
 
+    // Debounce effect: Update wallpaper after user stops typing for 1 second
+    useEffect(() => {
+        if (debounceTimerRef.current) {
+            clearTimeout(debounceTimerRef.current);
+        }
+        if (!inputValue || inputValue === wallpaperPath) {
+            return;
+        }
+        debounceTimerRef.current = setTimeout(() => {
+            updateWallpaper(inputValue);
+        }, 1000);
+        return () => {
+            if (debounceTimerRef.current) {
+                clearTimeout(debounceTimerRef.current);
+            }
+        };
+    }, [inputValue]);
+
     const loadHyprpaperConfig = async () => {
         setLoading(true);
         setError(null);
@@ -49,6 +70,7 @@ export default function Wallpaper() {
                         if (parts.length >= 2) {
                             const path = parts.slice(1).join('=').trim();
                             setWallpaperPath(path);
+                            setInputValue(path);
                             break;
                         }
                     }
@@ -61,21 +83,25 @@ export default function Wallpaper() {
         }
     };
 
-    const handlePathChange = async (newPath: string | number | boolean) => {
-        const pathStr = String(newPath);
-        setWallpaperPath(pathStr);
+    const updateWallpaper = async (pathStr: string) => {
         setSuccess(null);
         setError(null);
 
         try {
             if (wailsApp && wailsApp.UpdateHyprpaperWallpaper) {
                 await wailsApp.UpdateHyprpaperWallpaper(pathStr);
+                setWallpaperPath(pathStr);
                 setSuccess('Wallpaper path updated successfully!');
                 setTimeout(() => setSuccess(null), 3000);
             }
         } catch (err) {
             setError(err instanceof Error ? err.message : 'Failed to update wallpaper path');
         }
+    };
+
+    const handlePathChange = (newPath: string | number | boolean) => {
+        const pathStr = String(newPath);
+        setInputValue(pathStr);
     };
 
     return (
@@ -96,7 +122,7 @@ export default function Wallpaper() {
                     <label htmlFor="wallpaper-path">Path:</label>
                     <HyprGroupsChild
                         type="text"
-                        variable={wallpaperPath}
+                        variable={inputValue}
                         onChangeValue={handlePathChange}
                         placeholder="~/Pictures/wallpaper/image.jpg"
                         id="wallpaper-path"
