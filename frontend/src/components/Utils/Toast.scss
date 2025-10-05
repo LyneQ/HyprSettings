@@ -1,0 +1,124 @@
+.toast-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    pointer-events: none;
+}
+
+.toast {
+    min-width: 300px;
+    max-width: 500px;
+    padding: 16px 20px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    animation: slideIn 0.3s ease-out;
+    pointer-events: all;
+    background: var(--background-secondary, #2a2a2a);
+    color: var(--text-primary, #ffffff);
+    border-left: 4px solid;
+}
+
+.toast__message {
+    flex: 1;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.toast__close {
+    background: none;
+    border: none;
+    color: inherit;
+    font-size: 24px;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+    flex-shrink: 0;
+
+    &:hover {
+        opacity: 1;
+    }
+}
+
+.toast--success {
+    border-left-color: #4caf50;
+    
+    &::before {
+        content: '✓';
+        font-size: 18px;
+        font-weight: bold;
+        color: #4caf50;
+        margin-right: 8px;
+    }
+}
+
+.toast--error {
+    border-left-color: #f44336;
+    
+    &::before {
+        content: '✕';
+        font-size: 18px;
+        font-weight: bold;
+        color: #f44336;
+        margin-right: 8px;
+    }
+}
+
+.toast--info {
+    border-left-color: #2196f3;
+    
+    &::before {
+        content: 'ℹ';
+        font-size: 18px;
+        font-weight: bold;
+        color: #2196f3;
+        margin-right: 8px;
+    }
+}
+
+.toast--loading {
+    border-left-color: #ff9800;
+    
+    &::before {
+        content: '⟳';
+        font-size: 18px;
+        font-weight: bold;
+        color: #ff9800;
+        margin-right: 8px;
+        animation: rotate 1s linear infinite;
+    }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(400px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}

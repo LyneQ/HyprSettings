@@ -1,13 +1,12 @@
 import React, { useEffect, useState, useRef } from 'react';
 import './style.scss';
 import HyprGroupsChild from '../../../components/Groups/HyprGroupsChild';
+import { useToast } from '../../../components/Utils/Toast';
 
 export default function Wallpaper() {
     const [wallpaperPath, setWallpaperPath] = useState<string>('');
     const [inputValue, setInputValue] = useState<string>('');
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
-    const [success, setSuccess] = useState<string | null>(null);
+    const { showToast } = useToast();
     //@ts-ignore
     const debounceTimerRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -54,8 +53,7 @@ export default function Wallpaper() {
     }, [inputValue]);
 
     const loadHyprpaperConfig = async () => {
-        setLoading(true);
-        setError(null);
+        showToast('Loading configuration...', 'loading');
         try {
             if (wailsApp && wailsApp.GetHyprpaperConfig) {
                 const config = await wailsApp.GetHyprpaperConfig();
@@ -75,27 +73,22 @@ export default function Wallpaper() {
                         }
                     }
                 }
+                showToast('Configuration loaded successfully', 'success', 2000);
             }
         } catch (err) {
-            setError(err instanceof Error ? err.message : 'Failed to load hyprpaper config');
-        } finally {
-            setLoading(false);
+            showToast(err instanceof Error ? err.message : 'Failed to load hyprpaper config', 'error');
         }
     };
 
     const updateWallpaper = async (pathStr: string) => {
-        setSuccess(null);
-        setError(null);
-
         try {
             if (wailsApp && wailsApp.UpdateHyprpaperWallpaper) {
                 await wailsApp.UpdateHyprpaperWallpaper(pathStr);
                 setWallpaperPath(pathStr);
-                setSuccess('Wallpaper path updated successfully!');
-                setTimeout(() => setSuccess(null), 3000);
+                showToast('Wallpaper path updated successfully!', 'success');
             }
         } catch (err) {
-            setError(err instanceof Error ? err.message : 'Failed to update wallpaper path');
+            showToast(err instanceof Error ? err.message : 'Failed to update wallpaper path', 'error');
         }
     };
 
@@ -108,10 +101,6 @@ export default function Wallpaper() {
         <div className="page page--wallpaper">
             <h1>Wallpaper</h1>
             <p>Change wallpaper path in hyprpaper.conf</p>
-
-            {loading && <div className="wallpaper-loading">Loading configuration...</div>}
-            {error && <div className="wallpaper-error">Error: {error}</div>}
-            {success && <div className="wallpaper-success">{success}</div>}
 
             <div className="wallpaper-section">
                 <h3>Wallpaper Path</h3>

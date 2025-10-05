@@ -20,6 +20,7 @@ import Wallpaper from './pages/settings/Wallpaper/Wallpaper';
 import WindowSettings from './pages/settings/Window/Window';
 import './App.scss';
 import Design from './pages/Design';
+import { ToastProvider } from './components/Utils/Toast';
 
 const routes: RouteDefinition[] = [
     { path: '/', redirectTo: '/settings/general', layout: AppLayout, meta: { title: 'Home' } },
@@ -49,24 +50,26 @@ const routes: RouteDefinition[] = [
 
 export default function App() {
     return (
-        <RouterRoot
-            mode={(import.meta.env.VITE_ROUTER_MODE as any) || 'hash'}
-            basename={import.meta.env.VITE_ROUTER_BASENAME}
-            routes={routes}
-            notFound={<NotFound />}
-            loadingFallback={<div className="app-fallback">Loading…</div>}
-            deniedFallback={<div className="app-fallback">Access denied</div>}
-            beforeEach={({ from, to }) => {
-                console.debug('[router beforeEach]', { from, to });
-                return true;
-            }}
-            afterEach={({ from, to }) => {
-                console.debug('[router afterEach]', { from, to });
-                const title = routes.find((r) => r.path === to.pathname)?.meta?.title;
-                if (title) {
-                    document.title = `HyprSettings • ${title}`;
-                }
-            }}
-        />
+        <ToastProvider>
+            <RouterRoot
+                mode={(import.meta.env.VITE_ROUTER_MODE as any) || 'hash'}
+                basename={import.meta.env.VITE_ROUTER_BASENAME}
+                routes={routes}
+                notFound={<NotFound />}
+                loadingFallback={<div className="app-fallback">Loading…</div>}
+                deniedFallback={<div className="app-fallback">Access denied</div>}
+                beforeEach={({ from, to }) => {
+                    console.debug('[router beforeEach]', { from, to });
+                    return true;
+                }}
+                afterEach={({ from, to }) => {
+                    console.debug('[router afterEach]', { from, to });
+                    const title = routes.find((r) => r.path === to.pathname)?.meta?.title;
+                    if (title) {
+                        document.title = `HyprSettings • ${title}`;
+                    }
+                }}
+            />
+        </ToastProvider>
     );
 }
