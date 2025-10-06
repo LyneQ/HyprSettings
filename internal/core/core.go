@@ -1,6 +1,7 @@
 package Core
 
 import (
+	"HyprSettings/internal/core/scanner"
 	"context"
 	"os"
 	"os/exec"
