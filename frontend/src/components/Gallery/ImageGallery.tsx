@@ -138,6 +138,11 @@ export default function ImageGallery({ images, onSelect, OnSelectAvailable }: Im
 
     return (
         <div className="image-gallery">
+            {GalleryImages.length === 0 && (
+                <div className="no-images-found" style={{ textAlign: 'center' }}>
+                    No images found
+                </div>
+            )}
             <div className="image-grid">
                 {GalleryImages.map((image, index) => (
                     <GalleryImage key={index} image={image} onClick={() => handleImageClick(image)} />

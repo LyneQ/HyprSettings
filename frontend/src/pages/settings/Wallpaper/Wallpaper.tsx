@@ -19,6 +19,7 @@ export default function Wallpaper() {
     const [wallpaperPath, setWallpaperPath] = useState<string>('');
     const [inputValue, setInputValue] = useState<string>('');
     const [Images, setImages] = useState<Image[] | []>([]);
+    const [galeryPath, setGalleryPath] = useState<string>('');
     const { showToast } = useToast();
     //@ts-ignore
     const debounceTimerRef = useRef<NodeJS.Timeout | null>(null);
@@ -43,16 +44,6 @@ export default function Wallpaper() {
     useEffect(() => {
         if (wailsApp) {
             loadHyprpaperConfig();
-            loadWallpaperImages;
-            try {
-                const ScannedImages = wailsApp.GetHyprpaperWallpaper('~/Pictures/wallpaper');
-
-                ScannedImages.then((images: Image[]) => {
-                    setImages(images);
-                });
-            } catch (e) {
-                console.error('Failed to load wallpaper images:', e);
-            }
         }
     }, [wailsApp]);
 
@@ -101,9 +92,9 @@ export default function Wallpaper() {
         }
     };
 
-    const loadWallpaperImages = async () => {
+    const loadWallpaperImages = async (Path: string) => {
         try {
-            const images = await wailsApp.GetHyprpaperWallpaper('~/Pictures/wallpaper');
+            const images = await wailsApp.GetHyprpaperWallpaper(Path);
             setImages(images || []);
         } catch (e) {
             console.error('Failed to load wallpaper images:', e);
@@ -180,7 +171,42 @@ export default function Wallpaper() {
                     Select a wallpaper from the gallery below. Click on an image to preview it, then click "Select" to
                     set it as your wallpaper.
                 </p>
-                <ImageGallery images={Promise.resolve(Images)} onSelect={handleImageSelect} OnSelectAvailable={true} />
+                <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px', gap: '10px' }}>
+                    <HyprGroupsChild
+                        type="text"
+                        variable={galeryPath}
+                        onChangeValue={(v) => {
+                            const path = v.toString();
+                            // Check if path is valid and not too deep
+                            if (path.length === 0) return;
+                            if (path.trim() === '/') {
+                                showToast('Path cannot be root directory.', 'error');
+                            } else if (path.split('/').length > 10) {
+                                showToast('Path is too deep. Please choose a path with fewer subdirectories.', 'error');
+                                return;
+                            } else if (path.includes('..')) {
+                                showToast('Invalid path. Path traversal is not allowed.', 'error');
+                                return;
+                            } else if (!path.startsWith('~') && !path.startsWith('/')) {
+                                showToast('Invalid path. Please use absolute path or path starting with ~', 'error');
+                                return;
+                            } else {
+                                setGalleryPath(path);
+                            }
+                        }}
+                        id="wallpaper-gallery-path"
+                    />
+                    <button className="wallpaper-gallery-btn" onClick={() => loadWallpaperImages(galeryPath)}>
+                        Search
+                    </button>
+                </div>
+                {galeryPath.length > 0 && (
+                    <ImageGallery
+                        images={Promise.resolve(Images)}
+                        onSelect={handleImageSelect}
+                        OnSelectAvailable={true}
+                    />
+                )}
             </div>
         </div>
     );
