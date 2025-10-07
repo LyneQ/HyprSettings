@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import HyprGroupsChild, { SelectOption } from '../components/Groups/HyprGroupsChild';
-import HyprToolTip from '../components/Utils/HyprToolTip';
+import HyprGroupsChild, { SelectOption } from '../components/HyprGroups/HyprGroupsChild';
+import HyprToolTip from '../components/ToolTip/HyprToolTip';
 
 export default function Design({}) {
     const [num, setNum] = useState<number>(5);

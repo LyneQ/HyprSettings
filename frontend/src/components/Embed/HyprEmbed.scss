@@ -1,0 +1,73 @@
+@use '../../assets/scss/mixins' as *;
+
+// Styles for HyprEmbed component
+.hypr-embed {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.2);
+  margin: 1rem 0;
+
+  @include below-tablet {
+    margin: 0.75rem 0;
+    border-radius: 6px;
+  }
+
+  // Status variants
+  &--info {
+    border-left: 4px solid #3b82f6;
+    background: rgba(59, 130, 246, 0.1);
+  }
+
+  &--warning {
+    border-left: 4px solid #f59e0b;
+    background: rgba(245, 158, 11, 0.1);
+  }
+
+  &--error {
+    border-left: 4px solid #ef4444;
+    background: rgba(239, 68, 68, 0.1);
+  }
+
+  &--success {
+    border-left: 4px solid #10b981;
+    background: rgba(16, 185, 129, 0.1);
+  }
+}
+
+.hypr-embed__iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+
+  @include below-tablet {
+    position: absolute;
+  }
+}
+
+.hypr-embed__content {
+  padding: 1rem;
+
+  @include below-tablet {
+    padding: 0.75rem;
+  }
+
+  // Typography styles for content
+  p {
+    margin: 0.5rem 0;
+
+    &:first-child {
+      margin-top: 0;
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}

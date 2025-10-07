@@ -20,7 +20,7 @@ import Wallpaper from './pages/settings/Wallpaper/Wallpaper';
 import WindowSettings from './pages/settings/Window/Window';
 import './App.scss';
 import Design from './pages/Design';
-import { ToastProvider } from './components/Utils/Toast';
+import { ToastProvider } from './components/Toast/Toast';
 
 const routes: RouteDefinition[] = [
     { path: '/', redirectTo: '/settings/general', layout: AppLayout, meta: { title: 'Home' } },

@@ -49,8 +49,8 @@ export default function HyprLink({
 
     const content = (
         <span className="hypr-link__content">
-            {IconComp ? <IconComp size={iconSize} aria-hidden focusable={false} /> : null}
             <span className="hypr-link__label">{children ?? label}</span>
+            {IconComp ? <IconComp size={iconSize} aria-hidden focusable={false} /> : null}
         </span>
     );
 

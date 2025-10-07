@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import './Layout.scss';
 import HyprLink from '../components/Link/HyprLink';
 import HyprStarfield from '../components/Background/HyprStarfield';
-import HyprGroupsChild from '../components/Groups/HyprGroupsChild';
+import HyprGroupsChild from '../components/HyprGroups/HyprGroupsChild';
 import { Menu, X } from 'lucide-react';
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {

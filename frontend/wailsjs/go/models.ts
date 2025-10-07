@@ -21,3 +21,30 @@ export namespace Core {
 
 }
 
+export namespace scanner {
+	
+	export class FileType {
+	    Name: string;
+	    Path: string;
+	    Ext: string;
+	    Mime: string;
+	    Size: number;
+	    Content: string;
+	
+	    static createFrom(source: any = {}) {
+	        return new FileType(source);
+	    }
+	
+	    constructor(source: any = {}) {
+	        if ('string' === typeof source) source = JSON.parse(source);
+	        this.Name = source["Name"];
+	        this.Path = source["Path"];
+	        this.Ext = source["Ext"];
+	        this.Mime = source["Mime"];
+	        this.Size = source["Size"];
+	        this.Content = source["Content"];
+	    }
+	}
+
+}
+

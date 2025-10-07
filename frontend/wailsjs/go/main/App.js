@@ -10,6 +10,18 @@ export function GetHyprpaperConfig() {
   return window['go']['main']['App']['GetHyprpaperConfig']();
 }
 
+export function GetHyprpaperWallpaper(arg1) {
+  return window['go']['main']['App']['GetHyprpaperWallpaper'](arg1);
+}
+
+export function GetImageContent(arg1) {
+  return window['go']['main']['App']['GetImageContent'](arg1);
+}
+
+export function GetImageThumbnail(arg1) {
+  return window['go']['main']['App']['GetImageThumbnail'](arg1);
+}
+
 export function UpdateHyprpaperWallpaper(arg1) {
   return window['go']['main']['App']['UpdateHyprpaperWallpaper'](arg1);
 }

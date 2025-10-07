@@ -2,10 +2,11 @@
 
 // Styles for HyprLink component
 .hypr-link {
-  text-decoration: none; // default: no underline
+  text-decoration: none;
+  margin: 0 0.25rem;
 
   @include below-tablet {
-    min-height: 44px; // Better touch target
+    min-height: 44px;
     display: inline-flex;
     align-items: center;
   }
@@ -26,12 +27,11 @@
 .hypr-link__content {
   display: inline-flex;
   align-items: center;
-  gap: 0.25rem;
   width: fit-content;
   vertical-align: middle;
 
   @include below-tablet {
-    gap: 0.5rem; // More space between icon and text
+    gap: 0.5rem;
     padding: 0.25rem;
   }
 }
@@ -40,6 +40,6 @@
   line-height: 1;
 
   @include below-tablet {
-    font-size: 1rem; // Slightly larger for readability
+    font-size: 1rem;
   }
 }

@@ -1,7 +1,12 @@
 package scanner
 
 import (
+	"bytes"
 	"context"
+	"encoding/base64"
+	"image"
+	"image/jpeg"
+	"image/png"
 	"mime"
 	"os"
 	"path/filepath"
@@ -20,7 +25,7 @@ type FileType struct {
 	Ext     string
 	Mime    string
 	Size    int64
-	Content []byte
+	Content string
 }
 
 //======================================================================================================================
@@ -90,6 +95,89 @@ func ScanForFileTypes(path string, logCtx context.Context) ([]FileType, error) {
 	return fileTypes, nil
 }
 
+func GetImageAsBase64(filePath string) (string, error) {
+	fileBytes, err := os.ReadFile(filePath)
+	if err != nil {
+		return "", err
+	}
+	return base64.StdEncoding.EncodeToString(fileBytes), nil
+}
+
+// GetImageThumbnail generates a thumbnail version of the image (max 300px on longest side)
+func GetImageThumbnail(filePath string) (string, error) {
+	// Read the image file
+	file, err := os.Open(filePath)
+	if err != nil {
+		return "", err
+	}
+	defer file.Close()
+
+	// Decode the image
+	img, format, err := image.Decode(file)
+	if err != nil {
+		return "", err
+	}
+
+	// Get original dimensions
+	bounds := img.Bounds()
+	width := bounds.Dx()
+	height := bounds.Dy()
+
+	maxSize := 1000
+	var newWidth, newHeight int
+
+	if width > height {
+		if width > maxSize {
+			newWidth = maxSize
+			newHeight = (height * maxSize) / width
+		} else {
+			newWidth = width
+			newHeight = height
+		}
+	} else {
+		if height > maxSize {
+			newHeight = maxSize
+			newWidth = (width * maxSize) / height
+		} else {
+			newWidth = width
+			newHeight = height
+		}
+	}
+
+	// Create thumbnail using the nearest neighbor
+	thumbnail := image.NewRGBA(image.Rect(0, 0, newWidth, newHeight))
+
+	// Simple downscaling
+	for y := 0; y < newHeight; y++ {
+		for x := 0; x < newWidth; x++ {
+			srcX := (x * width) / newWidth
+			srcY := (y * height) / newHeight
+			thumbnail.Set(x, y, img.At(srcX, srcY))
+		}
+	}
+
+	// Encode to buffer with compression
+	var buf bytes.Buffer
+	switch format {
+	case "jpeg", "jpg":
+		err = jpeg.Encode(&buf, thumbnail, &jpeg.Options{Quality: 75})
+	case "png":
+		err = png.Encode(&buf, thumbnail)
+	default:
+		err = jpeg.Encode(&buf, thumbnail, &jpeg.Options{Quality: 75})
+	}
+
+	if err != nil {
+		return "", err
+	}
+
+	return base64.StdEncoding.EncodeToString(buf.Bytes()), nil
+}
+
+//======================================================================================================================
+// Private function
+//======================================================================================================================
+
 // expandPath expands ~ to the home directory and resolves the full path
 func expandPath(path string) string {
 	path = strings.TrimSpace(path)
@@ -108,11 +196,6 @@ func createFileTypeFromPath(filePath string) (FileType, error) {
 		return FileType{}, err
 	}
 
-	fileContent, err := os.ReadFile(filePath)
-	if err != nil {
-		return FileType{}, err
-	}
-
 	ext := filepath.Ext(filePath)
 	return FileType{
 		Name:    fileStat.Name(),
@@ -120,6 +203,6 @@ func createFileTypeFromPath(filePath string) (FileType, error) {
 		Ext:     ext,
 		Mime:    mime.TypeByExtension(ext),
 		Size:    fileStat.Size(),
-		Content: fileContent,
+		Content: "", // Don't load content by default - use GetImageContent for on-demand loading
 	}, nil
 }
